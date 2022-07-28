@@ -10,8 +10,9 @@ enum Status:
     VIP
     BLACKLISTED
 
-# @var Default value is first element in the enum. Here it is REGULAR
-user_status: Status
+# @notice Mapping from user addresses to statuses
+# @notice Default value is first element in the enum. Here it is REGULAR
+user_statuses: HashMap[address, Status]
 
 # Members are represented by uint256 values in the form of 2^n
 # n is the index of the member in the range
@@ -21,15 +22,16 @@ user_status: Status
 
 # @notice Get the status of the user
 @external
-def get() -> Status:
-    return self.user_status
+@view
+def get(_addr: address) -> Status:
+    return self.user_statuses[_addr]
 
-# @notice Set the status of the user by passing in a uint
+# @notice Set the status of a user by passing in a uint
 @external
-def set(_status: Status):
-    self.user_status = _status
+def set(_addr: address, _status: Status):
+    self.user_statuses[_addr] = _status
 
-# # @notice Reset the status of the user to REGULAR
-# @external
-# def reset():
-#     self.user_status = Status.REGULAR
+# @notice Reset the status of a user to REGULAR
+@external
+def reset(_addr: address):
+    self.user_statuses[_addr] = Status.REGULAR

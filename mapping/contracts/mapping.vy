@@ -16,7 +16,7 @@ def get(_addr: address) -> uint256:
     # @dev Mapping always returns a value. If the value was never set, it will return the default value
     return self.myMap[_addr]
 
-# @notice Update the value fpr this address
+# @notice Update the value for this address
 @external
 def set(_addr: address, _i: uint256):
     self.myMap[_addr] = _i
