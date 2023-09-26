@@ -4,18 +4,20 @@
 # @notice An enum must have at least 1 member, and can hold up to a maximum of 256 members.
 
 
-# @notice Defining an enum with two members
+# @notice Defining an enum with three members
 enum Status:
     REGULAR
     VIP
     BLACKLISTED
 
+
 # @notice Mapping from user addresses to statuses
-# @notice Default value is first element in the enum. Here it is REGULAR
+# @notice Default value is zero
 user_statuses: HashMap[address, Status]
 
 # Members are represented by uint256 values in the form of 2^n
 # n is the index of the member in the range
+# DEFAULT - 0
 # REGULAR - 1
 # VIP - 2
 # BLACKLISTED - 4
@@ -31,7 +33,7 @@ def get(_addr: address) -> Status:
 def set(_addr: address, _status: Status):
     self.user_statuses[_addr] = _status
 
-# @notice Reset the status of a user to REGULAR
+# @notice Reset the status of a user to default
 @external
 def reset(_addr: address):
-    self.user_statuses[_addr] = Status.REGULAR
+    self.user_statuses[_addr] = empty(Status)
